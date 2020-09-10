@@ -83,6 +83,9 @@ for i in minMax_pca:
 
 ![Alt text](/images/PCA_EVR.PNG?raw=true "Optional Title")
 
+
+Next I mapped the db scan outlier labels to the high frequency trading pricing data. It can be observed below that db scan does a good job of finding localized outliers. This can be useful in finding buy and sell points in a high frequency trading framework.  
+
 ```
 #data=hft_aapl
 #import matplotlib.pyplot as plt
@@ -115,6 +118,9 @@ x.plot(linestyle='-',markevery=find_loc(x,dates), marker='o',markerfacecolor='bl
 
 plt.show()
 ```
+
+![Alt text](?raw=true "Optional Title")
+
 
 
 

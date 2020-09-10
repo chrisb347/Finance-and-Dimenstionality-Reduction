@@ -8,7 +8,38 @@ Our first finding was best displayed on a triple bar graph, where we could easil
 
 ![Alt text](/images/PCA_EVR.PNG?raw=true "Optional Title")
 
+...
+#data=hft_aapl
+#import matplotlib.pyplot as plt
+# high price and low price embedding
+price_hl_embedding = data['marketHigh']
+x=pd.concat([price_hl_embedding,pd.get_dummies(db_outlier_label)[1]],axis=1)
 
+x.index=hft_aapl['Date']
+x['outlier']=x['marketHigh']*x.iloc[:,1]
+marks=x[1]
+
+dates=x[1]==1
+
+dates
+x1=x[dates]
+dates=x1.index
+x=x['marketHigh']
+
+
+def find_loc(df, dates):
+    marks = []
+    for date in dates:
+        marks.append(df.index.get_loc(date))
+    return marks
+
+plt.figure(figsize=(20,10))
+x.plot(linestyle='-',markevery=find_loc(x,dates), marker='o',markerfacecolor='black')
+#plt.show()
+#x['label'] = 1 if x[0]=='True' else 0
+
+plt.show()
+...
 
 
 

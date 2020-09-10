@@ -119,7 +119,7 @@ x.plot(linestyle='-',markevery=find_loc(x,dates), marker='o',markerfacecolor='bl
 plt.show()
 ```
 
-![Alt text](/images/Outlier_price_space.PNG?raw=true "Optional Title")
+![Alt text](/images/Outliers_price_space.png?raw=true "Optional Title")
 
 
 

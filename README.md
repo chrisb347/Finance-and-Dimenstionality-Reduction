@@ -179,7 +179,7 @@ for i in ticker_list:
 
 ```  
 
-![Alt text](/images/TSNE on HFT.PNG?raw=true "Optional Title")  
+![Alt text](/images/Outliers_price_space.png?raw=true "Optional Title")  
 
 
 

@@ -83,6 +83,7 @@ for i in minMax_pca:
 
 ![Alt text](/images/PCA_EVR.PNG?raw=true "Optional Title")
 
+## Finding 2
 
 Next I mapped the db scan outlier labels to the high frequency trading pricing data. It can be observed below that db scan does a good job of finding localized outliers. This can be useful in finding buy and sell points in a high frequency trading framework.  
 
@@ -121,7 +122,67 @@ plt.show()
 
 ![Alt text](/images/Outliers_price_space.png?raw=true "Optional Title")
 
+## Finding 3
 
+```
+# Get t-SNE Embedding
+def do_TSNE(data, perplexity=50, init='pca'):
+    normalized_data = StandardScaler().fit_transform(data)
+    tsne_ = TSNE(perplexity=perplexity,
+                 init=init)
+    tsneNewData = tsne_.fit_transform(normalized_data)
+    return tsneNewData
+
+##biplot function
+def biplot(embedding, label, label_name, Method, size=(10,7), outlier_label=None):
+    cmap = plt.get_cmap("tab20")
+    mk_list = ["o","p",">","X","P"]
+    fig, ax = plt.subplots(figsize=size)
+    plt.style.use('seaborn')
+    for i in range(len(label)):
+        ax.scatter(embedding[label[i],0], embedding[label[i],1], label=label_name[i],
+                   marker=mk_list[i], color=cmap(2*i), edgecolor='w', alpha=0.7, s=75)
+    if outlier_label is not None:
+        ax.scatter(embedding[outlier_label,0], embedding[outlier_label,1], 
+                   label='Outlier', marker='s', color='black', edgecolor='gold', alpha=0.5, s=60)
+    ax.legend(prop={'size': 10})
+    x_text = '$PC_{1}$' if Method == 'pca' else ('$SparsePC_{1}$' if Method == 'spca' else ('$'+Method+'_{1}'+'$'))
+    y_text = '$PC_{2}$' if Method == 'pca' else ('$SparsePC_{2}$' if Method == 'spca' else ('$'+Method+'_{2}'+'$'))
+    ax.set_xlabel(x_text, fontsize=14)
+    ax.set_ylabel(y_text, fontsize=14)
+    plt.show()
+    
+    return fig, ax
+
+
+###execute TSNE on High Frequemcy Trading data
+
+for i in ticker_list:
+  col_rename = {'v':'Volume', 'vw':'Volume Weighted Average Price', 'o':'Open', 'c':'Close', 'h':'High', 'l':'Low', 't':'Timestamp', 'n':'NumberOfItems'}
+
+  hft_dict[i].rename(columns=col_rename, inplace=True)
+
+#hft_dict['AMZN'] = hft_dict['AMZN'][hft_dict['AMZN'].applymap(np.isreal).any(1)]
+
+  hft_dict[i]=hft_dict[i].dropna()
+
+  
+  tsne_embedding = do_TSNE(hft_dict[i], perplexity=50, init='pca')
+  hft_dict[i]['Change'] = hft_dict[i]['Close'] - hft_dict[i]['Open']
+  hft_dict[i]['Change'] = hft_dict[i]['Change'].apply(lambda x: 'Rise' if x>0 else ('Fall' if x<0 else 'Flat'))
+  change_ = hft_dict[i]['Change']
+  oc_label = [hft_dict[i]['Change'] == 'Rise', hft_dict[i]['Change'] == 'Flat', hft_dict[i]['Change'] == 'Fall']
+  oc_label_name = ['Close > Open', 'Close = Open', 'Close < Open']
+  #save_pickle(tsne_embedding, 'tsne_embedding')
+  fig, ax = biplot(tsne_embedding, oc_label, oc_label_name, 'tsne', size=(10,7))
+  print(i)    
+    
+  ![Alt text](/images/TSNE on HFT.png?raw=true "Optional Title")  
+
+
+
+
+```
 
 
 

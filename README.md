@@ -176,13 +176,14 @@ for i in ticker_list:
   #save_pickle(tsne_embedding, 'tsne_embedding')
   fig, ax = biplot(tsne_embedding, oc_label, oc_label_name, 'tsne', size=(10,7))
   print(i)    
-    
-  ![Alt text](/images/TSNE on HFT.png?raw=true "Optional Title")  
+
+```  
+
+![Alt text](/images/TSNE on HFT.png?raw=true "Optional Title")  
 
 
 
 
-```
 
 
 

@@ -8,7 +8,7 @@ Our first finding was best displayed on a triple bar graph, where we could easil
 
 ![Alt text](/images/PCA_EVR.PNG?raw=true "Optional Title")
 
-...
+```
 #data=hft_aapl
 #import matplotlib.pyplot as plt
 # high price and low price embedding
@@ -39,7 +39,7 @@ x.plot(linestyle='-',markevery=find_loc(x,dates), marker='o',markerfacecolor='bl
 #x['label'] = 1 if x[0]=='True' else 0
 
 plt.show()
-...
+```
 
 
 

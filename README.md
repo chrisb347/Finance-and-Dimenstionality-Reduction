@@ -124,6 +124,10 @@ plt.show()
 
 ## Finding 3
 
+A part of the project was to find a high frequency data provider on our own, download the data ata second level and provide analysis on the data. I went out and found Polygon.io, which is a high frequency provider that can provide second level stock ticker data. Their API has a module of python functions that the user can fill out to connect to the API, and download *.json* files for as many tickers you pass into the API.
+
+I compared the two TSNE components, and labeled the stocks by direction of the open from the close. If it went up or down it was labeled blue or green respectively. If it was equal then it was labeled yellow, which is the interesting part of this analysis. The yellow points for every single stock seemed to cluster together. I argued this may signify a change in price direction and TSNE is able to identify this. This could be helpful in creating a high frequency trading strategy.
+
 ```
 # Get t-SNE Embedding
 def do_TSNE(data, perplexity=50, init='pca'):
